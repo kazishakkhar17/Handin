@@ -1,0 +1,23 @@
+# .NET
+backend/**/bin/
+backend/**/obj/
+backend/**/*.user
+backend/**/Properties/PublishProfiles/
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env.local
+frontend/npm-debug.log*
+frontend/*.tsbuildinfo
+
+# Environment
+.env
+*.env.local
+
+# Editors / OS
+.vs/
+.vscode/
+.idea/
+.DS_Store

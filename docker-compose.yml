@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: handin-system-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: assignment_system
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - handin_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: assignment-system-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5000
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=assignment_system;Username=postgres;Password=postgres"
+      Jwt__Secret: "REPLACE_WITH_A_LONG_RANDOM_SECRET_FOR_LOCAL_DOCKER_USE_ONLY"
+      Jwt__Issuer: "AssignmentSystem"
+      Jwt__Audience: "AssignmentSystemClient"
+      Cors__AllowedOrigins__0: "http://localhost:3000"
+    ports:
+      - "5000:5000"
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: assignment-system-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:5000
+    ports:
+      - "3000:3000"
+
+volumes:
+  assignment_system_pgdata:
