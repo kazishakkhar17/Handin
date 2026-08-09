@@ -229,7 +229,7 @@ Documented here as requested, since the brief left some design decisions open:
 - **No email notifications** (e.g. "assignment graded", "new assignment published") —
   out of scope per the brief's optional-additions list.
 - **No integration/end-to-end tests** — the test suite covers business rules and
-  authorization logic at the service layer; there are no `WebApplicationFactory`-based
+  authorization logic at the service layer, there are no `WebApplicationFactory`-based
   HTTP-level tests yet.
 - **No live-hosted URL is included.** A live deployment was attempted (frontend on
   Vercel, backend/database on several free-tier hosts) but every general-purpose backend
