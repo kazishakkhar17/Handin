@@ -240,7 +240,7 @@ Documented here as requested, since the brief left some design decisions open:
   for a free-tier demo, we left it out rather than take on cost or the risk of a
   mid-evaluation platform outage. Everything runs correctly locally per the setup
   instructions above (verified via a full fresh `git clone`, including from an empty
-  database).
+  database)
 
 ## API documentation
 
